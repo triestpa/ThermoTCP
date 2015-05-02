@@ -1,7 +1,7 @@
 import Cocoa
 
-let addr = //PUT THE HOST IP ADDRESS HERE
-let port = //PUT THE HOST PORT HERE
+let addr = "";// HOST IP HERE
+let port = 0;// HOST PORT HERE
 
 var host :NSHost = NSHost(address: addr)
 var inp :NSInputStream?
@@ -25,7 +25,7 @@ func ThermoTCP() {
     // Send signal to start writing data
     writeData(outputStream, "TempLogs");
     
-    // Calculate avg temperature over 60 samples
+    // Calculate avg temperature over 200 samples
     getAvgTemperature(inputStream);
     
     // Send signal to stop writing data
@@ -36,7 +36,7 @@ func ThermoTCP() {
     inputStream.close();
 }
 
-// Read data from socket connection to find the average reported temperature over 500 readings
+// Read data from socket connection to find the average reported temperature over 200 readings
 func getAvgTemperature(inputStream: NSInputStream) {
     while (prevSize < 200) {
         let temperatureReading = getTemperatureReading(inputStream);

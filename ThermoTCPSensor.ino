@@ -13,9 +13,6 @@ double temperature = 0.0;
 bool printLogs = false;
 int numLogs;
 
-int iter = 0;
-
-unsigned long lastTime = millis();
 
 void setup()
 {
@@ -78,7 +75,7 @@ String readSocket(int count) {
     for (i = 0; i < count; ++i) {
         charBuf[i] = client.read();
     }
-    // Format charBuf to be a valid string
+    // Make charBuf a valid string
     charBuf[i] = '\0';
     client.flush();
     return charBuf;
@@ -119,12 +116,6 @@ void writeSocket(String resp) {
     server.write(respArray);
 }
 
-// Reset variables governing printing data to sockets
-void cleanUp() {
-    printLogs = false;
-    numLogs = -1;
-}
-
 // Send temperature data over the socket connection
 void sendTempData(double temperature) {
     // Convert the temp value to an int for more effiecient transmition
@@ -134,4 +125,10 @@ void sendTempData(double temperature) {
      intBytes[0] = tempVal;
      intBytes[1] = tempVal >> 8;
      server.write(intBytes, 2);
+}
+
+// Reset variables governing printing data to sockets
+void cleanUp() {
+    printLogs = false;
+    numLogs = -1;
 }
